@@ -1,6 +1,6 @@
 import requests
-import pandas
-import sqlalchemy
+import json
+import sqlite3
 
 class Weather:
     def __init__(self, latitude, longitude, month, day, year, fiveYearAvgTemp, fiveYearMinTemp,
@@ -22,17 +22,11 @@ class Weather:
         self.fiveYearRainMax = fiveYearRainMax
 
     def mean_temp():
-        url2019 = 'https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2019-05-22&end_date=2019-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit'
-        url2020 = 'https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2020-05-22&end_date=2020-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit'
-        url2021 = 'https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2021-05-22&end_date=2021-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit'
-        url2022 = 'https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2022-05-22&end_date=2022-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit'
-        url2023 = 'https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2023-05-22&end_date=2023-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit'
-
-        temp2019 = requests.get(url2019)
-        temp2020 = requests.get(url2020)
-        temp2021 = requests.get(url2021)
-        temp2022 = requests.get(url2022)
-        temp2023 = requests.get(url2023)
+        temp2019 = requests.get('https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2019-05-22&end_date=2019-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit')
+        temp2020 = requests.get('https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2020-05-22&end_date=2020-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit')
+        temp2021 = requests.get('https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2021-05-22&end_date=2021-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit')
+        temp2022 = requests.get('https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2022-05-22&end_date=2022-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit')
+        temp2023 = requests.get('https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2023-05-22&end_date=2023-05-22&daily=temperature_2m_mean&temperature_unit=fahrenheit')
 
         temp_data2019 = temp2019.json()
         temp_data2020 = temp2020.json()
@@ -41,7 +35,7 @@ class Weather:
         temp_data2023 = temp2023.json()
 
         average_temps = (temp_data2019, temp_data2020, temp_data2021, temp_data2022, temp_data2023)
-        return average_temps
+        return temp_data2019
 
     def max_wind():
         url2019 = 'https://archive-api.open-meteo.com/v1/archive?latitude=46.8083&longitude=-100.7837&start_date=2019-05-22&end_date=2019-05-22&daily=wind_speed_10m_max&temperature_unit=fahrenheit&wind_speed_unit=mph'
@@ -86,8 +80,6 @@ class Weather:
 
         precipitation_sum = (precipitation_data2019, precipitation_data2020, precipitation_data2021, precipitation_data2022, precipitation_data2023)
         return precipitation_sum
-
-
 
 
 
