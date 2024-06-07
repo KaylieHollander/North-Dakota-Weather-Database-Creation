@@ -1,8 +1,5 @@
 from random import randint
-
-from WeatherAPI import Weather
 import Essential_Functions
-import sqlite3
 from sqlalchemy import create_engine, text, Column, String, Integer, Float, select
 from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session, Mapped, mapped_column
 

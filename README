@@ -1,0 +1,20 @@
+There are 3 main files that are needed for this project: one for the essential functions, another to pull the data from the API, and the last to create the database.
+
+1) Essential Functions File
+    - You will need to pull all the necessary data from the API file and store them into local variables at the top of the file
+    - You will need to create 12 modules to properly aggregate the data.
+        - There will be 3 modules to find the maximum values and 3 modules to find the minimum values for the temperature, wind, and precipitation respectively
+        - There will be 2 modules to find the averages for the temperature and wind
+        - There will be 1 module to find the sum of the precipitation values from the chosen location
+        - There will be 3 modules to find the day, month, and years respectively
+
+2) API File
+    - This file will pull the all of the data needed from the API website
+    - In order to properly aggregate and insert the data it into the database each year will need to be pulled separately
+    - You will need to create 15 modules in total, for the years 2019-2023. You will end up with one module per year per value.
+    - In order to pull the data you will need the url link for the API website so that you can insert it into a request statement
+    - After you return the request you will get the whole set of data necessary
+
+3) Database creation file
+    - Because of the set up done previously only the Essential Functions File will be necessary to import
+    - You will then be able to use SQLAlchemy ORM to create a database and table by instantiating an engine, a session, a user module, and a base module
