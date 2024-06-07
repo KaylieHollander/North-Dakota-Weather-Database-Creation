@@ -1,16 +1,15 @@
+from random import randint
+
 from WeatherAPI import Weather
 import Essential_Functions
 import sqlite3
 from sqlalchemy import create_engine, text, Column, String, Integer, Float, select
-from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session, Mapped, mapped_column
 
 engine = create_engine('sqlite:///weather.db', echo=True)
-with engine.connect() as connection:
-    result = connection.execute(text('select "Hello"'))
 
-    print(result)
 
-session = Session(bind=engine)
+SessionLocal = sessionmaker(bind=engine)
 
 
 class Base(DeclarativeBase):
@@ -19,21 +18,21 @@ class Base(DeclarativeBase):
 
 class User(Base):
     __tablename__ = 'weather'
-    id = Column(Integer, primary_key=True)
-    latitude = Column(Float)
-    longitude = Column(Float)
-    month = Column(Integer)
-    date = Column(Integer)
-    year = Column(Integer)
-    fiveYearTempAvg = Column(Float)
-    fiveYearTempMin = Column(Float)
-    fiveYearTempMax = Column(Float)
-    fiveYearWindAvg = Column(Float)
-    fiveYearWindMin = Column(Float)
-    fiveYearWindMax = Column(Float)
-    fiveYearRainSum = Column(Float)
-    fiveYearRainMin = Column(Float)
-    fiveYearRainMax = Column(Float)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    latitude: Mapped[float] = mapped_column()
+    longitude: Mapped[float] = mapped_column()
+    month: Mapped[int] = mapped_column()
+    date: Mapped[int] = mapped_column()
+    year: Mapped[int] = mapped_column()
+    fiveYearTempAvg: Mapped[float] = mapped_column()
+    fiveYearTempMin: Mapped[float] = mapped_column()
+    fiveYearTempMax: Mapped[float] = mapped_column()
+    fiveYearWindAvg: Mapped[float] = mapped_column()
+    fiveYearWindMin: Mapped[float] = mapped_column()
+    fiveYearWindMax: Mapped[float] = mapped_column()
+    fiveYearRainSum: Mapped[float] = mapped_column()
+    fiveYearRainMin: Mapped[float] = mapped_column()
+    fiveYearRainMax: Mapped[float] = mapped_column()
 
     def __repr__(self):
         return (f"<User(latitude={self.latitude}, longitude={self.longitude}, "
@@ -49,7 +48,7 @@ class User(Base):
 Base.metadata.create_all(bind=engine)
 
 weatherInput = User(
-    id=1,
+    id=randint(1, 9000000),
     latitude=Essential_Functions.meanTemp2019['latitude'],
     longitude=Essential_Functions.meanTemp2019['longitude'],
     month=Essential_Functions.Essentials.month(),
@@ -66,7 +65,18 @@ weatherInput = User(
     fiveYearRainMax=Essential_Functions.Essentials.PrecipMax()
 )
 
-session.add_all([weatherInput])
 
-session.commit()
+with SessionLocal() as session:
+    session.add(weatherInput)
+    session.commit()
 
+# Function to query all data
+# Function to query all data
+def query_all():
+    with SessionLocal() as session:
+        all_rows = session.execute(select(User)).scalars().all()
+        for user in all_rows:
+            print(user)
+
+
+query_all()
