@@ -1,17 +1,16 @@
 from WeatherAPI import Weather
+import Essential_Functions
 import sqlite3
-from sqlalchemy import create_engine, text, Column, String, Integer, Float
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
-
-meanTemp = Weather.mean_temp()
-maxWind = Weather.max_wind()
-rainSum = Weather.precip_sum()
+from sqlalchemy import create_engine, text, Column, String, Integer, Float, select
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session
 
 engine = create_engine('sqlite:///weather.db', echo=True)
 with engine.connect() as connection:
     result = connection.execute(text('select "Hello"'))
 
     print(result)
+
+session = Session(bind=engine)
 
 
 class Base(DeclarativeBase):
@@ -47,6 +46,27 @@ class User(Base):
 
 
 #print("Creating Tables >>>>> ")
-#Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
-print(meanTemp['longitude'])
+weatherInput = User(
+    id=1,
+    latitude=Essential_Functions.meanTemp2019['latitude'],
+    longitude=Essential_Functions.meanTemp2019['longitude'],
+    month=Essential_Functions.Essentials.month(),
+    date=Essential_Functions.Essentials.day(),
+    year=Essential_Functions.Essentials.year(),
+    fiveYearTempAvg=Essential_Functions.Essentials.TempAvg(),
+    fiveYearTempMin=Essential_Functions.Essentials.TempMin(),
+    fiveYearTempMax=Essential_Functions.Essentials.TempMax(),
+    fiveYearWindAvg=Essential_Functions.Essentials.WindAvg(),
+    fiveYearWindMin=Essential_Functions.Essentials.WindMin(),
+    fiveYearWindMax=Essential_Functions.Essentials.WindMax(),
+    fiveYearRainSum=Essential_Functions.Essentials.PrecipSum(),
+    fiveYearRainMin=Essential_Functions.Essentials.PrecipMin(),
+    fiveYearRainMax=Essential_Functions.Essentials.PrecipMax()
+)
+
+session.add_all([weatherInput])
+
+session.commit()
+
