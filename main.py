@@ -1,7 +1,8 @@
 from random import randint
+from sqlalchemy import create_engine, select
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column
+
 import Essential_Functions
-from sqlalchemy import create_engine, text, Column, String, Integer, Float, select
-from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session, Mapped, mapped_column
 
 engine = create_engine('sqlite:///weather.db', echo=True)
 
@@ -40,8 +41,6 @@ class User(Base):
                 f"fiveYearRainSum={self.fiveYearRainSum}, fiveYearRainMin={self.fiveYearRainMin}, "
                 f"fiveyearRainMax={self.fiveYearRainMax})>")
 
-
-#print("Creating Tables >>>>> ")
 Base.metadata.create_all(bind=engine)
 
 weatherInput = User(
@@ -67,8 +66,7 @@ with SessionLocal() as session:
     session.add(weatherInput)
     session.commit()
 
-# Function to query all data
-# Function to query all data
+
 def query_all():
     with SessionLocal() as session:
         all_rows = session.execute(select(User)).scalars().all()

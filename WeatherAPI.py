@@ -1,6 +1,4 @@
 import requests
-import json
-import sqlite3
 
 class Weather:
     def __init__(self, latitude, longitude, month, day, year, fiveYearAvgTemp, fiveYearMinTemp,
