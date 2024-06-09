@@ -267,6 +267,7 @@ class Essentials:
 
         return float(precip_Place_Holder)
 
+    print(PrecipSum())
 
 
 
