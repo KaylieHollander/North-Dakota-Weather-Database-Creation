@@ -1,12 +1,21 @@
 1) WeatherAPI.py Required Imports
-    - You will only need to import the requests http library for this file
+    - You will only need to import the requests http library for this file using the following template:
+        - pip install requests
     - The current version for this library is 2.32.3
 
 2) Essential_Functions.py Required Imports
-    - You will only need to import the WeatherAPI.py file for this one
+    - You will only need to import the WeatherAPI.py file for this one, using this template
+        - from WeatherAPI import Weather
+        - This import statement will need to be at the top of the file before the local variables
 
 3) Main.py Required Imports
     - You will need to import a total of 7 modules for this file:
-        - Randint from Random version 3.12
-        - Create_Engine and Select from SqlAlchemy version 2.0
-        - SessionMaker, DeclarativeBase, Mapped, and Mapped_Column from SqlAlchemy.ORM version 2.0
+        - Randint from Random version 3.12.2, using the following template:
+            - from random import randint
+            - Since the random library is already included in Python's standard library, you only need to add the above statement at the top of the file
+        - Create_Engine and Select from SqlAlchemy version 2.0.30, using either the pip install command in the terminal or the import statement at the top of the file
+            - pip install SQLAlchemy
+            - from sqlalchemy import create_engine, select
+        - SessionMaker, DeclarativeBase, Mapped, and Mapped_Column from SqlAlchemy.ORM version 2.0.30. You will either use the pip install command in the terminal or the import statement at the top of the file
+            - pip install SQLAlchemy
+            - from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column

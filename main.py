@@ -1,7 +1,6 @@
 from random import randint
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column
-
 import Essential_Functions
 
 engine = create_engine('sqlite:///weather.db', echo=True)
@@ -72,6 +71,5 @@ def query_all():
         all_rows = session.execute(select(User)).scalars().all()
         for user in all_rows:
             print(user)
-
 
 query_all()
