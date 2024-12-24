@@ -5,7 +5,7 @@ import Essential_Functions
 
 engine = create_engine('sqlite:///weather.db', echo=True)
 
-
+     
 SessionLocal = sessionmaker(bind=engine)
 
 
